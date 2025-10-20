@@ -1,0 +1,710 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <title>Práctica </title>
+     <link rel="icon" type="image/png" href="./assets/dado.png"/>
+</head>
+<body>
+    
+<canvas id="myCanvas">
+    <!--El elemento HTML canvas se puede utilizar para dibujar gráficos a través de 
+        secuencias de comandos (por lo general JavaScript ).-->
+</canvas>
+
+<!-- Aquí va todo el código de three.js -->
+
+<!-- Aquí van a declararse las fuentes .js-->
+<script src="./fonts/fuenteHallowen.js"></script>
+
+<!-- script type="importmap" importa las librerías necesarias para three.js-->
+<script type="importmap"> 
+    {
+        "imports":{
+            "three": "./js/three.module.js",
+            "three/OrbitControls": "./js/OrbitControls.js" 
+        }
+}
+</script>
+<script type="module"> 
+//🗃️🗃️ Mandar llamar a la librería
+    import * as THREE from 'three'; 
+    import {OrbitControls} from 'three/OrbitControls';
+    console.log(OrbitControls);
+    import {TextGeometry} from "./js/TextGeometry.js";
+    import {FontLoader} from "./js/FontLoader.js";
+
+    import Pan from "./assets/pan.js";
+    import Flores from "./assets/flor.js";
+    import FLOR2 from "./assets/flor2.js";
+    import FLOR3 from "./assets/flor3.js";
+    import MarcoFoto from "./assets/marco de foto1.js";
+    import MarcoFoto2 from "./assets/marco de foto2.js";
+    import MarcoFoto3 from "./assets/marco de foto3.js";
+    import MarcoFoto4 from "./assets/marco de foto4.js";
+    import MarcoFoto5 from "./assets/marco de foto5.js";
+    import MarcoFoto6 from "./assets/marco de foto6.js";
+    import VELA from "./assets/vela.js";
+    import BaseTrajinera from "./assets/baseT.js";
+    import alt from "./assets/altar.js";
+    import MANZANITAS from "./assets/manzana.js";
+    import CALAVERACUERPO from "./assets/Esqueleto_Brazos_Alzados.js";
+    import CABEZACALAVERA from "./assets/Esqueleto_Cabeza.js";
+    import CRUZ from "./assets/cruz.js";
+    import MOLE from "./assets/plato.js";
+    import VELA2 from "./assets/vela2.js";
+    import CAÑA from "./assets/caña.js";
+    import NARANJA from "./assets/naranja.js";
+    import VASODEAGUA from "./assets/vasoDeAgua.js";
+    import COPAL from "./assets/copal.js";
+    import ESQUELETON from "./assets/Esqueleto_Normal.js";
+    import CAMINOSDESEMPA from "./assets/caminos_de_cempasuchil.js";
+    import FLORESNARANJAS from "./assets/flores_naranjas_juntas.js";
+
+//🕹️🕹️ Renderer - Realiza una conexión entre el código y el canvas
+    var renderer = new THREE.WebGLRenderer({
+    canvas: document.getElementById('myCanvas'), antialias: true,
+    });
+    renderer.setPixelRatio(window.decivePixelRatio);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x70707C);
+
+
+// 🎬 Creando nueva escena - Es el espacio donde se colocan los objetos
+    var scene = new THREE.Scene();
+
+//🎥🎥 Agregar una cámara de perspectiva
+    var camera = new THREE.PerspectiveCamera(70,window.innerWidth / window.innerHeight,0.1,2000
+      );
+    scene.add(camera);
+
+    //Settings de la cámara
+    camera.position.set(0,10,70);
+
+    const sizes = {
+        width: window.innerWidth,
+        height: window.innerHeight,
+    };
+
+    const canvas = document.getElementById('myCanvas');
+
+    window.addEventListener('resize', () => {
+        sizes.width = window.innerWidth;
+        sizes.height = window.innerHeight;
+
+        camera.aspect = sizes.width / sizes.height;
+        camera.updateProjectionMatrix();
+
+        renderer.setSize(sizes.width, sizes.height);
+    });
+
+    // Añadiendo los OrbitControls
+    var controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+
+// Espacio para colocar los objetos
+
+//FONDO CON TEXTURA
+    var loarder=new THREE.TextureLoader();
+    var bgTexture=loarder.load('./assets/fondobueno.png');
+    scene.background=bgTexture;
+
+//AGUA
+    var agua=new THREE.PlaneGeometry(800,800);
+    var textAgua=new THREE.TextureLoader().load("./assets/agua.jpg");
+    textAgua.rotation=3.1416;
+    textAgua.center.set(0.5, 0.5);
+    var materialAgua=new THREE.MeshLambertMaterial({map:textAgua,side: THREE.DoubleSide});
+    var meshAgua=new THREE.Mesh(agua,materialAgua);
+    meshAgua.position.set(0,-22,0);
+    meshAgua.rotation.x=1.5708;
+    scene.add(meshAgua);
+    meshAgua.castShadow = true;
+    meshAgua.receiveShadow = true;
+
+//CAMINOS DE CEMPASUCHIL
+    const caminosdeflor=CAMINOSDESEMPA({x:-.2,y:0,z:0});
+    scene.add(caminosdeflor);
+    //panDmuerto.scale.set(5,5,5);
+    caminosdeflor.castShadow = true;
+    caminosdeflor.receiveShadow = true;
+
+//FLORES DE SEMPASUCHIL JUNTAS
+    const florecitasjuntas=FLORESNARANJAS({x:0,y:0,z:0});
+    scene.add(florecitasjuntas);
+    //panDmuerto.scale.set(5,5,5);
+    florecitasjuntas.castShadow = true;
+    florecitasjuntas.receiveShadow = true;
+
+//PAN DE MUERTO
+    const panDmuerto=Pan({x:68,y:-6.9,z:-20});
+    scene.add(panDmuerto);
+    //panDmuerto.scale.set(5,5,5);
+    panDmuerto.castShadow = true;
+    panDmuerto.receiveShadow = true;
+
+    const panDmuerto1=Pan({x:-68,y:-6.9,z:-25});
+    scene.add(panDmuerto1);
+    //panDmuerto.scale.set(5,5,5);
+    panDmuerto1.castShadow = true;
+    panDmuerto1.receiveShadow = true;
+
+    const panDmuerto2=Pan({x:35,y:3.1,z:-86});
+    scene.add(panDmuerto2);
+    //panDmuerto2.scale.set(5,5,5);
+    panDmuerto2.castShadow = true;
+    panDmuerto2.receiveShadow = true;
+
+    const panDmuerto21=Pan({x:-60,y:3.1,z:30});
+    scene.add(panDmuerto21);
+    panDmuerto21.scale.set(.6,.6,.6);
+    panDmuerto21.castShadow = true;
+    panDmuerto21.receiveShadow = true;
+
+    const panDmuerto3=Pan({x:35,y:12.5,z:-30});
+    scene.add(panDmuerto3);
+    //panDmuerto2.scale.set(5,5,5);
+    panDmuerto3.castShadow = true;
+    panDmuerto3.receiveShadow = true;
+
+    const panDmuerto31=Pan({x:-40,y:12.5,z:-70});
+    scene.add(panDmuerto31);
+    //panDmuerto2.scale.set(5,5,5);
+    panDmuerto31.castShadow = true;
+    panDmuerto31.receiveShadow = true;
+
+//MARCO
+    const marcoFotoN=MarcoFoto({x:42,y:5,z:-15});
+    scene.add(marcoFotoN);
+    marcoFotoN.castShadow = true;
+    marcoFotoN.receiveShadow = true;
+
+    const marcoFotoN2=MarcoFoto2({x:-42,y:5,z:-15});
+    scene.add(marcoFotoN2);
+    marcoFotoN2.castShadow = true;
+    marcoFotoN2.receiveShadow = true;
+
+    const marcoFotoN3=MarcoFoto3({x:27,y:15,z:-72});
+    scene.add(marcoFotoN3);
+    marcoFotoN3.castShadow = true;
+    marcoFotoN3.receiveShadow = true;
+    marcoFotoN3.rotation.y=3.14;
+
+    const marcoFotoN4=MarcoFoto4({x:27,y:-5,z:-98});
+    scene.add(marcoFotoN4);
+    marcoFotoN4.castShadow = true;
+    marcoFotoN4.receiveShadow = true;
+    marcoFotoN4.rotation.y=3.14;
+
+    const marcoFotoN5=MarcoFoto5({x:-61,y:-5,z:-99});
+    scene.add(marcoFotoN5);
+    marcoFotoN5.castShadow = true;
+    marcoFotoN5.receiveShadow = true;
+    marcoFotoN5.rotation.y=3.14;
+
+//VELA
+    const vela1 = VELA({x: -20, y: -6.7, z: 0});
+    vela1.castShadow = true;
+    vela1.receiveShadow = true;
+    vela1.scale.set(2, 2, 2);
+
+    const vela2 = VELA({x: -20, y: 3, z: -15});
+    vela2.castShadow = true;
+    vela2.receiveShadow = true;
+    vela2.scale.set(2, 2, 2);
+
+    const vela3 = VELA({x: -20, y: 13, z: -30});
+    vela3.castShadow = true;
+    vela3.receiveShadow = true;
+    vela3.scale.set(2, 2, 2);
+
+    // primer grupo
+    const GRUPO_3_VELAS = new THREE.Group();
+    GRUPO_3_VELAS.add(vela1, vela2, vela3);
+
+    // clon del primer grupo 
+    const GRUPO_3_VELAS_Clon = GRUPO_3_VELAS.clone();
+    GRUPO_3_VELAS_Clon.position.set(40, 0, 0);
+
+    // grupo principal que contendrá TODO
+    const GRUPOVELAS_COMPLETO = new THREE.Group();
+    GRUPOVELAS_COMPLETO.add(GRUPO_3_VELAS, GRUPO_3_VELAS_Clon);
+    scene.add(GRUPOVELAS_COMPLETO);
+
+    // clon del grupo principal
+    const GRUPOVELAS_COMPLETO_Clon = GRUPOVELAS_COMPLETO.clone();
+    scene.add(GRUPOVELAS_COMPLETO_Clon);
+    GRUPOVELAS_COMPLETO_Clon.rotation.y=3.14;
+    GRUPOVELAS_COMPLETO_Clon.position.set(0,0,-100);
+
+    const vela4 = VELA({x:0, y: 75, z: -47});
+    vela4.castShadow = true;
+    vela4.receiveShadow = true;
+    vela4.scale.set(2, 2, 2);
+    scene.add(vela4);
+    vela4.rotation.x=1;
+
+//VELADORA
+    const velita1=VELA2({x:57,y:3,z:-15});
+    scene.add(velita1);
+    velita1.castShadow = true;
+    velita1.receiveShadow = true;
+    velita1.scale.set(5,5,5);
+
+    const velita2=VELA2({x:-50,y:3,z:-80});
+    scene.add(velita2);
+    velita2.castShadow = true;
+    velita2.receiveShadow = true;
+    velita2.scale.set(5,5,5);
+
+//ALTAR
+    const altarcito=alt({x:0,y:-12,z:-50});
+    scene.add(altarcito);
+    altarcito.scale.set(.5,.5,.5);
+    altarcito.castShadow = true;
+    altarcito.receiveShadow = true;
+
+//MANZANAS
+    const TRESMANZANAS=MANZANITAS({x:32,y:-5,z:2});
+    scene.add(TRESMANZANAS);
+    TRESMANZANAS.castShadow = true;
+    TRESMANZANAS.receiveShadow = true;
+    TRESMANZANAS.scale.set(0.2,0.2,0.2);
+
+    const MANZANAS2 = TRESMANZANAS.clone();
+    MANZANAS2.position.set(-40, -5, -97); 
+    scene.add(MANZANAS2);
+
+//COPAL
+    const copal1=COPAL({x:60,y:-7,z:0});
+    scene.add(copal1);
+    copal1.castShadow = true;
+    copal1.receiveShadow = true;
+
+    const copal2=COPAL({x:20,y:28,z:-50});
+    scene.add(copal2);
+    copal2.castShadow = true;
+    copal2.receiveShadow = true;
+
+    const copal3=COPAL({x:-20,y:28,z:-50});
+    scene.add(copal3);
+    copal3.castShadow = true;
+    copal3.receiveShadow = true;
+
+
+//CRUZ
+    const cruzcafe=CRUZ({x:0,y:28,z:-50});
+    scene.add(cruzcafe);
+    cruzcafe.castShadow = true;
+    cruzcafe.receiveShadow = true;
+
+    cruzcafe.scale.set(15,15,15);
+
+//PLATO DE MOLE
+    const platito=MOLE({x:-57,y:-6.5,z:1});
+    scene.add(platito);
+    platito.castShadow = true;
+    platito.receiveShadow = true;
+    platito.scale.set(.7,.7,.7);
+    platito.rotation.y=1;
+
+    const platito2=MOLE({x:55,y:5,z:-78});
+    scene.add(platito2);
+    platito2.castShadow = true;
+    platito2.receiveShadow = true;
+    platito2.scale.set(.7,.7,.7);
+    platito2.rotation.y=1;
+
+//CAÑA
+    const caña1=CAÑA({x:-60,y:13.5,z:-27});
+    scene.add(caña1);
+    caña1.castShadow = true;
+    caña1.receiveShadow = true;
+    caña1.scale.set(3,3,3);
+
+//NARANJA
+    const naranjita=NARANJA({x:-52,y:-8.5,z:1});
+    scene.add(naranjita);
+    naranjita.castShadow = true;
+    naranjita.receiveShadow = true;
+    naranjita.scale.set(5,5,5);
+
+    const naranjita2=NARANJA({x:-52,y:3,z:-83});
+    scene.add(naranjita2);
+    naranjita2.castShadow = true;
+    naranjita2.receiveShadow = true;
+    naranjita2.scale.set(5,5,5);
+
+//VASO DE AGUA
+    const Vasito=VASODEAGUA({x:-30,y:3,z:-14});
+    scene.add(Vasito);
+    Vasito.castShadow = true;
+    Vasito.receiveShadow = true;
+    Vasito.scale.set(4,4,4);
+
+    const Vasito2=VASODEAGUA({x:65,y:-6,z:-100});
+    scene.add(Vasito2);
+    Vasito2.castShadow = true;
+    Vasito2.receiveShadow = true;
+    Vasito2.scale.set(4,4,4);
+
+
+//CALAVERA
+
+    const esqueletoCompleto = new THREE.Group();
+
+    const cuerpecito = CALAVERACUERPO({x: 0, y: 0, z: 0});
+    const cabecita = CABEZACALAVERA({x: 0, y: 18, z: 0});
+
+    esqueletoCompleto.add(cuerpecito);
+    esqueletoCompleto.add(cabecita);
+
+    esqueletoCompleto.position.set(0, 142, -190);
+    esqueletoCompleto.scale.set(2, 2, 2);
+
+    scene.add(esqueletoCompleto);
+
+    const Esqueleto1=ESQUELETON({x:-60,y:8,z:25});
+    scene.add(Esqueleto1);
+    Esqueleto1.castShadow = true;
+    Esqueleto1.receiveShadow = true;
+    Esqueleto1.scale.set(.3,.3,.3);
+
+    const Esqueleto2=ESQUELETON({x:-60,y:8,z:40});
+    scene.add(Esqueleto2);
+    Esqueleto2.castShadow = true;
+    Esqueleto2.receiveShadow = true;
+    Esqueleto2.scale.set(.3,.3,.3);
+    Esqueleto2.rotation.y=3.14;
+
+    const Esqueleto3=ESQUELETON({x:50,y:265,z:-50});
+    scene.add(Esqueleto3);
+    Esqueleto3.castShadow = true;
+    Esqueleto3.receiveShadow = true;
+    Esqueleto3.scale.set(.3,.3,.3);
+    Esqueleto3.rotation.y=1.57;
+    
+    const esqueleto4 = esqueletoCompleto.clone();
+    esqueleto4.position.set(150, 100, -50);
+    esqueleto4.scale.set(0.3, 0.3, 0.3);
+    esqueleto4.rotation.y = 1.57;
+    esqueleto4.rotation.x = 1;
+    esqueleto4.castShadow = true;
+    esqueleto4.receiveShadow = true;
+    scene.add(esqueleto4);
+
+    const esqueleto5 = esqueleto4.clone();
+    esqueleto5.position.set(47, 8, 36);
+    esqueleto5.rotation.y =-2.5;
+    esqueleto5.rotation.z = 0;
+    esqueleto5.rotation.x = 0;
+    scene.add(esqueleto5);
+
+    const Esqueleto6=ESQUELETON({x:35,y:46,z:-180});
+    scene.add(Esqueleto6);
+    Esqueleto6.castShadow = true;
+    Esqueleto6.receiveShadow = true;
+    Esqueleto6.scale.set(.3,.3,.3);
+
+    const naranjita3=NARANJA({x:15,y:40, z:-176});
+    scene.add(naranjita3);
+    naranjita3.castShadow = true;
+    naranjita3.receiveShadow = true;
+    naranjita3.scale.set(5,5,5);
+
+    const esqueleto7 = Esqueleto6.clone();
+    esqueleto7.position.set(46, 46, 175);
+    scene.add(esqueleto7);
+
+    const platito3=MOLE({x:46,y:42,z:180});
+    scene.add(platito3);
+    platito3.castShadow = true;
+    platito3.receiveShadow = true;
+    platito3.scale.set(.5,.5,.5);
+    platito3.rotation.y=1;
+
+    const esqueleto8 = Esqueleto6.clone();
+    esqueleto8.position.set(-30, 8, 70);
+    esqueleto8.rotation.y =2.5;
+    scene.add(esqueleto8);
+
+    const copal4=COPAL({x:-28,y:-1,z:67});
+    scene.add(copal4);
+    copal4.scale.set(.5,.5,.5);
+    copal4.castShadow = true;
+    copal4.receiveShadow = true;
+
+    const esqueleto9 = Esqueleto6.clone();
+    esqueleto9.position.set(-123, 46, 35);
+    esqueleto9.rotation.y =2.5;
+    scene.add(esqueleto9);
+
+    const Vasito3=VASODEAGUA({x:-113,y:41,z:31});
+    scene.add(Vasito3);
+    Vasito3.castShadow = true;
+    Vasito3.receiveShadow = true;
+    Vasito3.scale.set(4,4,4);
+
+    const esqueleto10 = Esqueleto6.clone();
+    esqueleto10.position.set(40, 8,77);
+    esqueleto10.rotation.y =-2.5;
+    scene.add(esqueleto10);
+
+    const marcoFotoN6=MarcoFoto6({x:27,y:5,z:73});
+    scene.add(marcoFotoN6);
+    marcoFotoN6.castShadow = true;
+    marcoFotoN6.receiveShadow = true;
+    marcoFotoN6.rotation.y=3.2;
+
+    const esqueleto11 = esqueleto5.clone();
+    esqueleto11.position.set(-47, 46, 173);
+    esqueleto11.rotation.y =-2.5;
+    scene.add(esqueleto11);
+
+    const esqueleto12 = esqueleto5.clone();
+    esqueleto12.position.set(-100, 46, -60);
+    esqueleto12.rotation.y =2.5;
+    scene.add(esqueleto12);
+
+    const esqueleto13 = esqueleto5.clone();
+    esqueleto13.position.set(100, 46, -80);
+    esqueleto13.rotation.y =-2.5;
+    scene.add(esqueleto13);
+
+//  TRAJINERA
+    const traj=BaseTrajinera({x:0,y:0,z:0});
+    scene.add(traj);
+    traj.rotation.y=-0.78;
+
+    traj.castShadow = true;
+    traj.receiveShadow = true;
+//POSTES
+    var poste1=new THREE.BoxGeometry(2,15,2,10);
+    var materialPoste= new THREE.MeshLambertMaterial({
+        color:0xe1101b, side: THREE.DoubleSide
+    });
+    var mesh=new THREE.Mesh(poste1,materialPoste);
+    scene.add(mesh);
+    mesh.position.set(14.9,10.35,0);
+    mesh.rotation.y=0.22;
+
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+
+    var poste2=new THREE.BoxGeometry(2,15,2,10);
+    var mesh2=new THREE.Mesh(poste2,materialPoste);
+    scene.add(mesh2);
+    mesh2.position.set(-14.7,10.35,0);
+    mesh2.rotation.y=-0.22;
+
+    mesh2.castShadow = true;
+    mesh2.receiveShadow = true;
+
+    var poste3=new THREE.BoxGeometry(2,15,2,10);
+    var mesh3=new THREE.Mesh(poste3,materialPoste);
+    scene.add(mesh3);
+    mesh3.position.set(-10.8,10.35,-20);
+    mesh3.rotation.y=-0.22;
+
+    mesh3.castShadow = true;
+    mesh3.receiveShadow = true;
+
+    var poste4=new THREE.BoxGeometry(2,15,2,10);
+    var mesh4=new THREE.Mesh(poste4,materialPoste);
+    scene.add(mesh4);
+    mesh4.position.set(10.8,10.35,-20);
+    mesh4.rotation.y=0.22;
+
+    mesh4.castShadow = true;
+    mesh4.receiveShadow = true;
+
+    var poste5=new THREE.BoxGeometry(2,2,20);
+    var mesh5=new THREE.Mesh(poste5,materialPoste);
+    scene.add(mesh5);
+    mesh5.position.set(12.7,10.35,-10);
+    mesh5.rotation.y=0.22;
+
+    mesh5.castShadow = true;
+    mesh5.receiveShadow = true;
+
+    var poste51=new THREE.BoxGeometry(2,2,20);
+    var mesh51=new THREE.Mesh(poste51,materialPoste);
+    scene.add(mesh51);
+    mesh51.position.set(12.7,16.8,-10);
+    mesh51.rotation.y=0.22;
+
+    mesh51.castShadow = true;
+    mesh51.receiveShadow = true;
+
+    var poste6=new THREE.BoxGeometry(2,2,20);
+    var mesh6=new THREE.Mesh(poste6,materialPoste);
+    scene.add(mesh6);
+    mesh6.position.set(-12.7,10.35,-10);
+    mesh6.rotation.y=-0.19;
+
+    mesh6.castShadow = true;
+    mesh6.receiveShadow = true;
+
+    var poste61=new THREE.BoxGeometry(2,2,20);
+    var mesh61=new THREE.Mesh(poste61,materialPoste);
+    scene.add(mesh61);
+    mesh61.position.set(-12.7,16.8,-10);
+    mesh61.rotation.y=-0.19;
+
+    mesh61.castShadow = true;
+    mesh61.receiveShadow = true;
+
+    var poste7=new THREE.BoxGeometry(2,7.4,2,10);
+    var mesh7=new THREE.Mesh(poste7,materialPoste);
+    scene.add(mesh7);
+    mesh7.position.set(-13.7,6.5,-5);
+    mesh7.rotation.y=-0.22;
+
+    mesh7.castShadow = true;
+    mesh7.receiveShadow = true;
+
+    var poste8=new THREE.BoxGeometry(2,7.4,2,10);
+    var mesh8=new THREE.Mesh(poste8,materialPoste);
+    scene.add(mesh8);
+    mesh8.position.set(13.9,6.5,-5);
+    mesh8.rotation.y=0.22;
+
+    mesh8.castShadow = true;
+    mesh8.receiveShadow = true;
+
+    var poste9=new THREE.BoxGeometry(2,7.4,2,10);
+    var mesh9=new THREE.Mesh(poste9,materialPoste);
+    scene.add(mesh9);
+    mesh9.position.set(12.1,6.5,-14);
+    mesh9.rotation.y=0.22;
+
+    mesh9.castShadow = true;
+    mesh9.receiveShadow = true;
+
+    var poste10=new THREE.BoxGeometry(2,7.4,2,10);
+    var mesh10=new THREE.Mesh(poste10,materialPoste);
+    scene.add(mesh10);
+    mesh10.position.set(-12,6.5,-14);
+    mesh10.rotation.y=-0.22;
+
+    mesh10.castShadow = true;
+    mesh10.receiveShadow = true;
+
+//CUPULA
+    var cupula=new THREE.CylinderGeometry(16.3,11.4,25,25,11,true,0,3.14);
+    var materialCup= new THREE.MeshLambertMaterial({
+        color:0xfeed01, side: THREE.DoubleSide
+    });
+    var meshCupula=new THREE.Mesh(cupula,materialCup);
+    scene.add(meshCupula);
+    meshCupula.position.set(0,17.5,-9);
+    meshCupula.rotation.z=1.5708;
+    meshCupula.rotation.y=1.5708;
+
+    meshCupula.castShadow = true;
+    meshCupula.receiveShadow = true;
+
+//CUADRO CON ESTAMPADO
+    var cupulaA=new THREE.PlaneGeometry(33,15);
+    var textEstampado=new THREE.TextureLoader().load("./assets/estampado.jpg");
+    var materialEstampado=new THREE.MeshLambertMaterial({map:textEstampado,side: THREE.DoubleSide});
+    var meshCupulaA=new THREE.Mesh(cupulaA,materialEstampado);
+    scene.add(meshCupulaA);
+    meshCupulaA.position.set(0,40,4);
+
+    meshCupulaA.castShadow = true;
+    meshCupulaA.receiveShadow = true;
+
+//CUBOS DONDE IRAN LAS LETRAS
+    var CUBO1=new THREE.BoxGeometry(10,16,1);
+    var materialCupA=new THREE.MeshLambertMaterial({
+        color:0x0297d9, side: THREE.DoubleSide
+    });
+    var meshCubo=new THREE.Mesh(CUBO1,materialCupA);
+    scene.add(meshCubo);
+    meshCubo.position.set(-11.5,26,4);
+
+    meshCubo.castShadow = true;
+    meshCubo.receiveShadow = true;
+
+    var CUBO2=new THREE.BoxGeometry(10,16,1);
+    var meshCubo2=new THREE.Mesh(CUBO2,materialCupA);
+    scene.add(meshCubo2);
+    meshCubo2.position.set(11.5,26,4);
+
+    meshCubo2.castShadow = true;
+    meshCubo2.receiveShadow = true;
+
+    var CUBO3=new THREE.BoxGeometry(20,10,1);
+    var meshCubo3=new THREE.Mesh(CUBO3,materialCupA);
+    scene.add(meshCubo3);
+    meshCubo3.position.set(0,29,4);
+
+    meshCubo3.castShadow = true;
+    meshCubo3.receiveShadow = true;
+
+//TEXTOS   
+    var loader=new FontLoader();
+
+      var font=loader.parse(fontJSON);
+      var geometry1=new TextGeometry('R A M',{
+        font:font,
+        size:6,
+        height:2,
+      });
+      geometry1.center();
+
+      var material1=new THREE.MeshLambertMaterial({
+        color:0x000000,
+        emissive:0xB1FCCF,
+        shading:THREE.FlatShading,
+        
+      });
+        var texto=new THREE.Mesh(geometry1,material1);
+        texto.position.set(0,29,5);
+        texto.castShadow=true;
+        scene.add(texto);
+
+        texto.castShadow = true;
+        texto.receiveShadow = true;
+
+    const TRAJINERACOMPLETA=new THREE.Group();
+    TRAJINERACOMPLETA.add(traj,mesh,mesh2,mesh3,mesh4,mesh5,mesh51,mesh6,mesh61,mesh7,mesh8,mesh9,mesh10,meshCupula,
+    meshCupulaA,meshCubo,meshCubo2,meshCubo3,texto);
+    scene.add(TRAJINERACOMPLETA);
+
+    TRAJINERACOMPLETA.scale.set(8,8,8);
+
+    TRAJINERACOMPLETA.castShadow = true;
+    TRAJINERACOMPLETA.receiveShadow = true;
+
+// GUIAS
+    var gridHelper = new THREE.GridHelper(1080,500);
+    //scene.add (gridHelper);
+
+    var axesHelper = new THREE.AxesHelper(800);
+    //scene.add (axesHelper);
+
+// LUCES
+    var LuzAmbiente = new THREE.AmbientLight(0xffffff, .9);
+    LuzAmbiente.position.set(50,50,50);
+    scene.add(LuzAmbiente);
+
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+//🎰🎰Rendering y animación
+    requestAnimationFrame(render);
+    function render() {
+
+    //🪄🪄 Animación - 
+        cabecita.rotation.z+=.02;
+    //🎮🎮Actualización del OrbitControls para generar la suavidad de movimiento
+    controls.update();
+
+    //Llamado para renderizar y volver a llamar a la misma función (render)
+    renderer.render(scene, camera);
+    requestAnimationFrame(render);
+    }
+</script>
+</body>
+</html>
