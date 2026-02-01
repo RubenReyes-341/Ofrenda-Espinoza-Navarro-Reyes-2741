@@ -6,12 +6,12 @@ La escena permite al usuario recorrer libremente el entorno mediante controles d
 
 ---
 
-## 🎯 Objetivo del proyecto
+## Objetivo del proyecto
 Aplicar los conocimientos adquiridos en la creación y distribución de escenarios tridimensionales, incluyendo el uso correcto de cámaras, iluminación, animaciones básicas y navegación dentro de un entorno 3D en el navegador.
 
 ---
 
-## 🛠️ Tecnologías utilizadas
+## Tecnologías utilizadas
 - JavaScript
 - Three.js
 - OrbitControls
@@ -20,7 +20,7 @@ Aplicar los conocimientos adquiridos en la creación y distribución de escenari
 
 ---
 
-## 🧩 Funcionalidades
+## Funcionalidades
 - Renderizado de una escena 3D completa en el navegador
 - Navegación libre mediante OrbitControls:
   - Zoom in / Zoom out
@@ -32,7 +32,7 @@ Aplicar los conocimientos adquiridos en la creación y distribución de escenari
 
 ---
 
-## 📚 Aprendizajes
+## Aprendizajes
 - Creación de un entorno 3D de gran escala para exploración del usuario
 - Uso adecuado de luces para resaltar elementos específicos de la escena
 - Construcción de estructuras complejas utilizando geometrías 3D básicas
@@ -41,19 +41,20 @@ Aplicar los conocimientos adquiridos en la creación y distribución de escenari
 
 ---
 
-## ▶️ Demo
+## Demo
 La visualización puede verse directamente en el navegador en el siguiente enlace:  
-🔗 https://rubenreyes-341.github.io/Ofrenda-Espinoza-Navarro-Reyes-2741/
+
+https://rubenreyes-341.github.io/Ofrenda-Espinoza-Navarro-Reyes-2741/
 
 ---
 
-## 🚀 Ejecución local
+## Ejecución local
 1. Clonar el repositorio
 2. Abrir el archivo `index.html` en un navegador web compatible
 
 ---
 
-## 🧠 Contexto del proyecto
+## Contexto del proyecto
 Proyecto escolar realizado como parte de la **Ingeniería en Comunicación Multimedia**.
 
 El desarrollo se realizó en equipo. Mi participación principal incluyó la creación de la estructura general del escenario, el diseño de la trajinera, el escenario principal y la integración del código de los demás integrantes mediante la vinculación e importación de sus componentes dentro del proyecto.
